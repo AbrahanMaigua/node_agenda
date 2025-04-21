@@ -1,0 +1,28 @@
+services:
+  app:
+    container_name: agenda-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./app:/app
+      - /app/node_modules  # evita conflicto con node_modules local
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017/miapp
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    container_name: mongo_agenda
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
