@@ -1,6 +1,8 @@
 # node_agenda
 
 
- docker build -t agenda .
- docker run -it --entrypoint sh agenda
+docker compose up --build
 
+# aceder a los contenedores 
+
+docker exec -ir agenda-app sh
