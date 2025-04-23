@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h2 Registro de Usuario
+  form(method="POST")
+    label(for="username") Usuario:
+    input(type="text", name="username", required)
+    
+    label(for="email") Email:
+    input(type="email", name="email", required)
+    
+    label(for="password") Contraseña:
+    input(type="password", name="password", required)
+
+    button(type="submit") Registrarse

@@ -1,0 +1,14 @@
+services:
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=thedbname
+      - MONGO_INITDB_ROOT_USERNAME=userforthedb
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    
+    volumes:
+      - ./data:/data/db
+      # - ./create_ddbb.js:/docker-entrypoint-initdb.d/create_ddbb.js:ro
+
+    ports:
+      - 27017:27017

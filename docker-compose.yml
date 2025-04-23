@@ -7,27 +7,28 @@ services:
     working_dir: /app
     volumes:
       - ./app:/app
-      - /app/node_modules  # evita conflicto con node_modules local
+      - /app/node_modules 
     ports:
       - "3000:3000"
     environment:
       - PORT=3000
-      - MONGO_URL=mongodb://mongo:27017/miapp
-    
+      - MONGO_URL=mong://userforthedb:passwrod@:27017/miapp
     dns:
       - 8.8.8.8
       - 8.8.4.4
-
     depends_on:
       - mongo
 
   mongo:
-    image: mongo:7
-    container_name: mongo_agenda
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=my_database
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
 
-volumes:
-  mongodb_data:
+    volumes:
+      - ./app/data:/data/db
+      - ./create_ddbb.js:/docker-entrypoint-initdb.d/create_ddbb.js:ro
+
+    ports:
+      - 27017:27017
