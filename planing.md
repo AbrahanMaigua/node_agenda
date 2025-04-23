@@ -1,25 +1,24 @@
 # 1. authController.js
 Para: Registro, login, logout, validación de tokens.
 Funciones típicas:
-
 registerUser(req, res)
-
 loginUser(req, res)
-
 logoutUser(req, res)
-
 refreshToken(req, res)
+
+# 1.2 middleware
+loginRequieme
+# 1.3 env
+dotenv
+mongodb (user, password, JWT_SECRET)
 
 # 2. taskController.js
 Para: Gestión de tareas (pendientes, en progreso, hechas).
 Funciones típicas:
 
 createTask(req, res)
-
 getTasks(req, res)
-
 updateTask(req, res)
-
 deleteTask(req, res)
 
 # 3. calendarController.js
