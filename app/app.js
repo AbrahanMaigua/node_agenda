@@ -18,6 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+require('dotenv').config()
+console.log(process.env) // remove this after you've confirmed it is working
+const connectDB = require('./config/db'); // ajustá el path si es necesario
+connectDB(); // Llama a la función para conectar
+
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);

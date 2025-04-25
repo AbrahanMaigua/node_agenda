@@ -21,7 +21,7 @@ getTasks(req, res)
 updateTask(req, res)
 deleteTask(req, res)
 
-# 3. calendarController.js
+# 3 calendarController.js
 Para: Eventos y fechas en calendario.
 Funciones típicas:
 
