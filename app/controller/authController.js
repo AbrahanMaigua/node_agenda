@@ -12,7 +12,7 @@ const User = require("../models/shema/auth");
 const cookieParser = require("cookie-parser");
 // Clave secreta para JWT (deberías usar .env en producción)
 const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
-console.log("JWT_SECRET:", JWT_SECRET);
+// console.log("JWT_SECRET:", JWT_SECRET);
 // Registro de usuario
 const registerUser = async (req, res) => {
     try {
