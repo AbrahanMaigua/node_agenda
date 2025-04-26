@@ -6,6 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var taskRouter = require('./routes/task');
+
 
 var app = express();
 
@@ -20,12 +22,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 require('dotenv').config()
 console.log(process.env) // remove this after you've confirmed it is working
-const connectDB = require('./config/db'); // ajustá el path si es necesario
+const connectDB = require('./controller/db'); // ajustá el path si es necesario
 connectDB(); // Llama a la función para conectar
 
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/task', taskRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

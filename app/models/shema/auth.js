@@ -1,4 +1,6 @@
-const mongoose = require("../../controller/db")
+const connet
+ = require("../../controller/db")
+const mongoose = require('mongoose');
 
 // Definición del esquema de usuario
 const UserSchema = new mongoose.Schema({

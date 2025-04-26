@@ -1,5 +1,5 @@
 // filepath: /home/abrahan/Projetos/agenda/app/controller/task.js
-const Task = require('../models/task');
+const Task = require('../models/shema/task');
 
 // Example: Create a new task
 const createTask = async (req, res) => {

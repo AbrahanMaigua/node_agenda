@@ -9,10 +9,10 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/shema/auth");
-
+const cookieParser = require("cookie-parser");
 // Clave secreta para JWT (deberías usar .env en producción)
-const JWT_SECRET = process.env.JWT_SECRET || "clave_secreta";
-
+const JWT_SECRET = process.env.JWT_SECRET || "secretkey";
+console.log("JWT_SECRET:", JWT_SECRET);
 // Registro de usuario
 const registerUser = async (req, res) => {
     try {
@@ -43,6 +43,9 @@ const registerUser = async (req, res) => {
 
 // Login
 const loginUser = async (req, res) => {
+    if (req.cookies.token) {
+        return res.status(400).json({ msg: "Ya estás logueado" });
+    }
     try {
         const { email, password } = req.body;
 
@@ -57,15 +60,23 @@ const loginUser = async (req, res) => {
         if (!isMatch) return res.status(401).json({ msg: "Contraseña incorrecta" });
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "1h" });
-
-        res.status(200).json(
-            { token, 
-              user: { 
-                id: user._id, 
+        // res.cookie("token", token).send('Cookie-parser');
+        res
+        .status(200)
+        .cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 3600000
+        })
+        .json({
+            token,
+            user: {
+                id: user._id,
                 username: user.username,
-                email: user.email } 
-            });
-
+                email: user.email
+            }
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: "Error en login" });
@@ -75,19 +86,32 @@ const loginUser = async (req, res) => {
 // Logout (opcional para JWT, depende de frontend)
 const logoutUser = (req, res) => {
     // En JWT no hay "logout" en backend, es tarea del frontend eliminar el token
+    if (!req.cookies.token) {
+        return res.status(400).json({ msg: "No estás logueado" });
+    }
+    res.clearCookie("token"); // Borra la cookie del token
     res.json({ msg: "Logout exitoso (el frontend debe borrar el token)" });
 };
 
 // Refresh token 
 const refreshToken = (req, res) => {
-    const oldToken = req.headers.authorization?.split(" ")[1];
-    if (!oldToken) return res.status(401).json({ msg: "Token requerido" });
+    const oldToken = req.cookies.token;
+    if (!oldToken) {
+        return res.status(401).json({ msg: "Token requerido" });
+    }
+    
 
     try {
         const decoded = jwt.verify(oldToken, JWT_SECRET);
         const newToken = jwt.sign({ id: decoded.id }, JWT_SECRET, { expiresIn: "1h" });
-
-        res.json({ token: newToken });
+        res
+        .cookie("token", newToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 3600000
+        })
+        .json({ token: newToken });
     } catch (error) {
         res.status(401).json({ msg: "Token inválido o expirado" });
     }

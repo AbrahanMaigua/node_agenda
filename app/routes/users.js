@@ -5,22 +5,23 @@ const auth = require('../controller/authController');
 
 // Registrar usuario
 
-router.get('/auth/register', function(req, res, next) {
+router.get('/register', function(req, res, next) {
   res.render('register', { title: 'register' });
 });
 
-router.post('/auth/register', auth.registerUser);
+router.post('/register', auth.registerUser);
 
 // Login
-router.post('/auth/login', auth.loginUser);
-router.get('/auth/login', function(req, res, next) {
+router.post('/login', auth.loginUser);
+router.get('/login', function(req, res, next) {
   res.render('register', { title: 'login' });
 });
 
 // Logout
-router.post('/auth/logout', auth.logoutUser);
+router.post('/logout', auth.logoutUser);
+router.get('/logout', auth.logoutUser);
 
 // Refresh token
-router.get('/token/refresh', auth.refreshToken);
+router.get('refresh', auth.refreshToken);
 
 module.exports = router;

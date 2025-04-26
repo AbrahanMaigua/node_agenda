@@ -1,15 +1,17 @@
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+
 
 const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
+  const authHeader = req.cookies.token || req.headers.authorization;
+  console.log("Auth Header:", authHeader);
   // Verifica si el token fue enviado
   if (!authHeader) {
-    return res.status(401).json({ message: "Token no proporcionado." });
+    console.log("Token no proporcionado.");
+    return res.redirect("/user/login");
   }
 
-  // El token suele venir como "Bearer <token>", por eso se divide
-  const [, token] = authHeader.split(" ");
+  const token = authHeader.split(" ")[1] || authHeader;
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "secretkey");
