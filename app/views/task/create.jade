@@ -1,0 +1,24 @@
+// This is a Jade/Pug template for creating a new task
+extends layout
+
+block content
+  h1= create task
+  p Create a new task and manage your to-do list
+    form(action='/task/create', method='POST')
+        div
+        label(for='title') Title
+        input(type='text', name='title', required=true)
+        div
+        label(for='description') Description
+        textarea(name='description')
+        div
+        label(for='status') Status
+        select(name='status')
+            option(value='pending') Pending
+            option(value='in-progress') In Progress
+            option(value='completed') Completed
+        div
+        label(for='dueDate') Due Date
+        input(type='date', name='dueDate')
+        div
+        button(type='submit') Create Task

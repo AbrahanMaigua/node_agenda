@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    p Are you sure you want to delete this task?
+    form(action=`/task/delete/${task._id}`, method='POST')
+        input(type='hidden', name='_method', value='DELETE')
+        button(type='submit') Delete Task
+    a(href='/task/list') Cancel
+    p This action cannot be undone. Please confirm your decision.
+    p If you have any questions, please contact support.
+    p Thank you for using our task management system!
+    p We appreciate your feedback and suggestions.
+    p Your satisfaction is our priority.
+    p If you encounter any issues, please reach out to our support team.

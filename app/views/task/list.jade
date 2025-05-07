@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    h1 Task List
+    p Manage your tasks efficiently
+    table
+        thead
+        tr
+            th Title
+            th Description
+            th Status
+            th Due Date
+            th Actions
+        tbody
+        each task in tasks
+            tr
+            td #{task.title}
+            td #{task.description}
+            td #{task.status}
+            td #{task.dueDate}
+            td
+                a(href=`/task/edit/${task._id}`) Edit
+                a(href=`/task/delete/${task._id}`) Delete
+    a(href='/task/create') Create New Task

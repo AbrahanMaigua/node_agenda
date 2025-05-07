@@ -9,12 +9,12 @@ const {
 
 const router = express.Router();
 
-router.use(authMiddleware);
+// router.use(authMiddleware);
 
-router.get   ('/',    getTasks);
-router.post  ('/',    createTask);
-router.put   ('/:id', updateTask);
-router.delete('/:id', deleteTask);
+router.get   ('/',       getTasks);
+router.post  ('/create', createTask);
+router.put   ('/:id',    updateTask);
+router.delete('/:id',    deleteTask);
 
 
 module.exports = router;
